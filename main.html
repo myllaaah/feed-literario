@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Literatura Brasileira — Feed</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<!--
+╔══════════════════════════════════════════════════════════════╗
+║           LITERATURA BRASILEIRA — FEED INTERATIVO           ║
+║                 Projeto 3° Ano EMTI · 2025                  ║
+╠══════════════════════════════════════════════════════════════╣
+║  ONDE VOCÊS DEVEM MEXER:                                    ║
+║  ✅ Seção "DADOS DO PERFIL" (perfil do escritor)            ║
+║  ✅ Seção "DESTAQUES" (conteúdo dos modais)                 ║
+║  ✅ Seção "STORIES" (imagens e vídeos)                      ║
+║  ✅ Seção "POSTS DO FEED" (imagens e legendas)              ║
+║  ✅ Hashtags nas .post-tags                                 ║
+║  ✅ Comentários nos posts                                   ║
+║                                                             ║
+║  ONDE NÃO MEXER (a não ser que saibam o que estão fazendo): ║
+║  ❌ Variáveis CSS no :root e nos [data-theme]               ║
+║  ❌ Funções JavaScript (openStory, openHighlight, etc.)     ║
+║  ❌ Estrutura dos modais (.modal-overlay, .modal-box)       ║
+║  ❌ Sistema de temas (.theme-bar, setTheme)                 ║
+║  ❌ Responsividade (@media queries)                         ║
+╚══════════════════════════════════════════════════════════════╝
+-->
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     BARRA DE TEMAS — NÃO EDITAR
+     ══════════════════════════════════════════════════════════ -->
+<div class="theme-bar">
+  <span class="theme-bar-title">Machado de Assis| Feed Literário</span>
+  <div class="theme-btns">
+    <button class="theme-btn active" onclick="setTheme('claro', this)">☀️ Claro</button>
+    <button class="theme-btn" onclick="setTheme('noite', this)">🌙 Noite</button>
+    <button class="theme-btn" onclick="setTheme('verde', this)">🌿 Verde</button>
+    <button class="theme-btn" onclick="setTheme('azul', this)">🌊 Azul</button>
+  </div>
+</div>
+
+<div class="insta-wrapper">
+
+  <!-- ══════════════════════════════════════════════════════════
+       ✅ DADOS DO PERFIL — EDITE AQUI
+       Preencha com as informações do escritor escolhido
+       ══════════════════════════════════════════════════════════ -->
+  <div class="profile-header">
+    <div class="profile-top">
+      <div class="profile-avatar">
+        <div class="profile-avatar-inner" id="profile-avatar-content">
+          <!--
+            ✅ FOTO DO ESCRITOR:
+            Substitua o emoji abaixo por:
+            <img src="URL_DA_FOTO" alt="Nome do Escritor">
+            
+            Dica: busque a foto no Wikimedia Commons (gratuito e sem direitos autorais)
+            Exemplo: <img src="https://upload.wikimedia.org/..." alt="Machado de Assis">
+          -->
+          <img src="j_m_machado_de_assis_250b.png" alt="Foto de perfil do autor">
+        </div>
+      </div>
+
+      <div class="profile-stats">
+        <div class="stat">
+          <!--
+            ✅ Atualize este número conforme a quantidade de posts que vocês criarem
+          -->
+          <span class="stat-num" id="stat-posts">3</span>
+          <span class="stat-label">publicações</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">22.318</span><!-- Deixe como curiosidade ou coloque um número fictício divertido -->
+          <span class="stat-label">seguidores</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">110</span>
+          <span class="stat-label">seguindo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-info">
+      <!--
+        ✅ NOME COMPLETO DO ESCRITOR
+        Exemplo: Machado de Assis
+      -->
+      <div class="profile-name" id="profile-name">Joaquim Maria Machado de Assis</div>
+
+      <!--
+        ✅ PERÍODO LITERÁRIO E DATAS
+        Exemplo: Realismo · 1839 – 1908
+      -->
+      <div class="profile-period" id="profile-period">Realismo · 1839 – 1908</div>
+
+      <!--
+        ✅ MINI BIOGRAFIA
+        Escreva 2-3 linhas sobre o escritor: geração, estilo, principais contribuições.
+        Use emojis para deixar mais dinâmico!
+      -->
+      <div class="profile-bio" id="profile-bio">
+        Machado de Assis foi escritor, jornalista e fundador da Academia Brasileira de Letras. É considerado um dos maiores autores da literatura brasileira. Suas obras analisam a sociedade, o comportamento humano e as relações sociais com ironia e crítica.<br>
+        Rio de Janeiro-RJ
+      </div>
+
+      <!--
+        ✅ LINK DA OBRA PRINCIPAL
+        Pode ser um link para a obra no Domínio Público (domíniopublico.gov.br)
+        ou para a página do escritor na Academia Brasileira de Letras
+        Exemplo: <a href="https://..." class="profile-link" id="profile-link">📖 Dom Casmurro (1899)</a>
+      -->
+      <a href="https://www.amazon.com.br/Dom-Casmurro-Edi%C3%A7%C3%A3o-Machado-Assis/dp/6585849574/ref=asc_df_6585849574?tag=brbngshpdsk-20&linkCode=df0&hvadid=76966030459105&hvnetw=o&hvqmt=e&hvbmt=be&hvdev=c&hvlocint=&hvlocphy=673&hvtargid=pla-4580565460561675&psc=1&msclkid=fb6ec89e50701ad75829a28a026d5472" class="profile-link" id="profile-link">🔗 Obra principal ou obra mais conhecida</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       ✅ STORIES — EDITE AQUI
+       Cada story-item abre um modal com a mídia em tela cheia.
+       Você pode usar imagens estáticas ou vídeos curtos.
+       ══════════════════════════════════════════════════════════ -->
+  <div class="stories-section">
+    <div class="stories-section-label">Stories</div>
+    <div class="stories-bar">
+      <div class="stories-inner" id="stories-container">
+
+        <!--
+          ══════════════════════════════════════════════
+          COMO ADICIONAR UM STORY:
+
+          <div class="story-item" onclick="openStory(this)"
+               data-media="URL_DA_IMAGEM_OU_VIDEO"
+               data-type="image"     (ou "video")
+               data-caption="Legenda que aparece embaixo da mídia"
+               data-label="Rótulo abaixo do círculo">
+            <div class="story-ring">
+              <div class="story-inner">
+                COLOQUE UMA MINIATURA AQUI:
+                <img src="URL_MINIATURA" alt="...">
+                OU um emoji representativo
+              </div>
+            </div>
+            <span class="story-label">Rótulo</span>
+          </div>
+
+          DICAS:
+          - data-type="image"  → para fotos (jpg, png, webp)
+          - data-type="video"  → para vídeos curtos (mp4)
+          - O story some automaticamente após 5 segundos
+          - Toque/clique na metade direita para avançar
+          - Toque/clique na metade esquerda para voltar
+          ══════════════════════════════════════════════
+        -->
+
+        <!-- STORY 1 -->
+        <div class="story-item" onclick="openStory(this)"
+             data-media="1.jng"
+             data-type="image"
+             data-caption="“Dom Casmurro”, de Machado de Assis, continua conquistando leitores com seus mistérios, críticas sociais e personagens inesquecíveis."
+             data-label="Story 1">
+          <div class="story-ring">
+            <div class="story-inner">
+              <!--
+                ✅ MINIATURA DO STORY 1
+                Substitua o emoji por: <img src="URL_DA_IMAGEM" alt="...">
+                E preencha data-media="" com a URL da imagem ou vídeo completo
+              -->
+              <img src="1.jpg" alt="Capa do primeiro story.">
+            </div>
+          </div>
+          <span class="story-label">Story 1</span>
+        </div>
+
+        <!-- STORY 2 -->
+        <div class="story-item" onclick="openStory(this)"
+             data-media="2.jpg"
+             data-type="image"
+             data-caption="“Olhos de ressaca” que marcaram a literatura brasileira… Você acha que Capitu traiu Bentinho?"
+             data-label="Story 2">
+          <div class="story-ring">
+            <div class="story-inner"><img src="2.jpg" alt="Capa do segundo story"></div>
+          </div>
+          <span class="story-label">Story 2</span>
+        </div>
+
+        <!-- STORY 3 -->
+        <div class="story-item" onclick="openStory(this)"
+             data-media="3.jpg"
+             data-type="image"
+             data-caption="Ler Machado de Assis é mergulhar em histórias cheias de reflexão, ironia e crítica social.Um autor essencial da literatura brasileira!"
+             data-label="Story 3">
+          <div class="story-ring">
+            <div class="story-inner"><img src="3.jpg" alt="Capa do terceiro story"></div>
+          </div>
+          <span class="story-label">Story 3</span>
+        </div>
+
+        <!--
+          ✅ Para adicionar mais stories, copie um bloco acima e cole aqui
+        -->
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       ✅ DESTAQUES — EDITE AQUI
+       Cada destaque abre um modal com conteúdo rico.
+       Clique em cada um para ver o exemplo de estrutura.
+       ══════════════════════════════════════════════════════════ -->
+  <div class="highlights-section">
+    <div class="highlights-label">Destaques</div>
+    <div class="highlights-bar">
+
+      <!-- DESTAQUE: OBRAS -->
+      <div class="highlight-item" onclick="openHighlight('obras')">
+        <div class="highlight-ring">
+          <!--
+            ✅ CAPA DO DESTAQUE "OBRAS"
+            Substitua o emoji por: <img src="URL_DA_IMAGEM" alt="Obras">
+          -->
+          🖊️
+        </div>
+        <span class="highlight-label">Obras</span>
+      </div>
+
+      <!-- DESTAQUE: VIDA -->
+      <div class="highlight-item" onclick="openHighlight('vida')">
+        <div class="highlight-ring">🏛️</div>
+        <span class="highlight-label">Vida</span>
+      </div>
+
+      <!-- DESTAQUE: FRASES -->
+      <div class="highlight-item" onclick="openHighlight('frases')">
+        <div class="highlight-ring">💬</div>
+        <span class="highlight-label">Frases</span>
+      </div>
+
+      <!-- DESTAQUE: CONTEXTO HISTÓRICO -->
+      <div class="highlight-item" onclick="openHighlight('contexto')">
+        <div class="highlight-ring">📜</div>
+        <span class="highlight-label">Contexto</span>
+      </div>
+
+      <!-- DESTAQUE: PRÊMIOS E LEGADO -->
+      <div class="highlight-item" onclick="openHighlight('legado')">
+        <div class="highlight-ring">🏆</div>
+        <span class="highlight-label">Legado</span>
+      </div>
+
+      <!--
+        ✅ Para adicionar mais destaques, copie um bloco acima e:
+        1. Mude o onclick para openHighlight('minha-secao')
+        2. Adicione o conteúdo do modal na seção de MODAIS DE DESTAQUE abaixo
+      -->
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       ✅ FEED DE POSTS — EDITE AQUI
+       ══════════════════════════════════════════════════════════ -->
+  <div class="posts-feed">
+
+    <!-- ══════════════════════════════════════════════════════════
+         POST 1
+         ══════════════════════════════════════════════════════════ -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-avatar">
+          <div class="post-avatar-inner">
+            <!--
+              ✅ FOTO DO ESCRITOR NO POST (pequena)
+              Substitua por: <img src="URL_DA_FOTO" alt="Nome">
+              Ou use a inicial do nome: M (para Machado, por ex.)
+            -->
+            <img src="j_m_machado_de_assis_250b.png" alt="Foto de perfil">
+          </div>
+        </div>
+        <div class="post-user-info">
+          <div class="post-username">
+            <!--
+              ✅ USERNAME e PERÍODO LITERÁRIO
+              Exemplo: @machadodeassis
+            -->
+            @machado_de_assis.
+            <span class="periodo-badge">Realismo</span><!-- ex: Realismo, Romantismo, Modernismo... -->
+          </div>
+          <!--
+            ✅ LOCALIZAÇÃO E ANOS
+            Exemplo: Rio de Janeiro, RJ · 1839–1908
+          -->
+          <div class="post-location">Rio de Janeiro-RJ ·29 min</div>
+        </div>
+        <div class="post-menu">···</div>
+      </div>
+
+      <!--
+        ✅ IMAGEM DO POST 1
+        Substitua todo este bloco por:
+        <img src="URL_DA_IMAGEM" alt="Descrição" class="post-image">
+
+        Sugestões de imagem para o 1° post:
+        - Retrato do escritor
+        - Capa da obra principal
+        - Ilustração do período literário
+      -->
+      <div class="post-image-placeholder">
+        <img src="1.png" alt="Imagem do post 1">
+      </div>
+      <div class="post-actions">
+        <button class="post-action-btn" onclick="toggleLike(this)" title="Curtir">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <button class="post-action-btn" title="Comentar" onclick="this.closest('.post-card').querySelector('.post-comments-preview').scrollIntoView({behavior:'smooth'})">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        <button class="post-action-btn" title="Compartilhar" onclick="sharePost(this)">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+        <button class="post-action-btn post-save-btn" title="Salvar" onclick="toggleSave(this)">
+          <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+
+      <div class="post-likes">🤍 Seja o primeiro a curtir</div>
+
+      <div class="post-caption">
+        <strong>@machado_de_assis</strong>
+        <!--
+          ✅ LEGENDA DO POST 1
+          Sugestões:
+          - Uma citação famosa do autor
+          - Apresentação da obra principal
+          - Fato curioso sobre a vida do escritor
+          - Reflexão sobre o período literário
+          Use emojis! 📚✍️🌟
+        -->
+        Machado de Assis foi um dos maiores nomes da literatura brasileira! Com obras cheias de ironia, crítica social e reflexões sobre o comportamento humano, ele marcou o início do Realismo no Brasil.
+      </div>
+
+      <div class="post-tags">
+        <!--
+          ✅ EDITE AS HASHTAGS do post 1
+          Exemplo: #Realismo #MachadoDeAssis #DomCasmurro
+        -->
+        <span class="tag">#LiteraturaBrasileira</span>
+        <span class="tag">#Realismo</span>
+        <span class="tag">#MachadoDeAssis</span>
+        <span class="tag">#Literatura</span>
+      </div>
+
+      <div class="post-comments-preview">Ver todos os comentários</div>
+
+      <div class="post-comment">
+        <!--
+          ✅ EDITE OS COMENTÁRIOS
+          Podem ser comentários de colegas, do professor, ou personagens fictícios da época!
+        -->
+        <strong>@prof_literatura</strong>
+        Ótimo post! Que obra incrível! 📚
+      </div>
+<div class="post-date">Há 1 minitos</div>
+      <div class="post-date">Há 28 segundos dias</div><!-- ✅ Ajuste a data -->
+    </div>
+    <!-- fim post 1 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         POST 2
+         ══════════════════════════════════════════════════════════ -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-avatar">
+          <div class="post-avatar-inner"><img src="j_m_machado_de_assis_250b.png" alt="Foto de Perfil"></div>
+        </div>
+        <div class="post-user-info">
+          <div class="post-username">
+            @machado_de_assis<!-- ✅ -->
+            <span class="periodo-badge">Realismo</span><!-- ✅ -->
+          </div>
+          <div class="post-location">Rio de Janeiro-RJ, 2 dias</div><!-- ✅ -->
+        </div> 
+        <div class="post-menu">···</div>
+      </div>
+
+      <!--
+        ✅ IMAGEM DO POST 2
+        Sugestão: capa de uma obra específica, manuscrito, ou ilustração da época
+      -->
+      <div class="post-image-placeholder">
+        <img src="2.jpg" alt="imagem do post 2">
+      </div>
+
+      <div class="post-actions">
+        <button class="post-action-btn" onclick="toggleLike(this)" title="Curtir">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <button class="post-action-btn" title="Comentar">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        <button class="post-action-btn" title="Compartilhar" onclick="sharePost(this)">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+        <button class="post-action-btn post-save-btn" title="Salvar" onclick="toggleSave(this)">
+          <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+
+      <div class="post-likes">🤍 Seja o primeiro a curtir</div>
+
+      <div class="post-caption">
+        <strong>@usuario_do_escritor</strong>
+        <!-- ✅ LEGENDA DO POST 2: Uma obra específica, poema, trecho famoso ou momento da vida do escritor -->
+       Dom Casmurro” é um clássico que atravessa gerações! A história de Bentinho e Capitu continua despertando dúvidas e debates até hoje… Afinal, Capitu traiu ou não traiu?
+      </div>
+
+      <div class="post-tags">
+        <!-- ✅ EDITE AS HASHTAGS -->
+        <span class="tag">#LiteraturaBrasileira</span>
+        <span class="tag">#Realismo</span>
+        <span class="tag">#MachadoDeAssis</span>
+      </div>
+
+      <div class="post-comments-preview">Ver todos os comentários</div>
+
+      <div class="post-comment">
+        <strong>@leitor_apaixonado</strong>
+        Adorei esse autor! Muito representativo do período. 🌟
+      </div>
+
+      <div class="post-date">Há 23h</div>
+    </div>
+    <!-- fim post 2 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         POST 3
+         ══════════════════════════════════════════════════════════ -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-avatar">
+          <div class="post-avatar-inner"><img src="j_m_machado_de_assis_250b.png" alt="imagem de perfil"></div>
+        </div>
+        <div class="post-user-info">
+          <div class="post-username">
+            @machado_de_assis<!-- ✅ -->
+            <span class="periodo-badge">Realismo</span><!-- ✅ -->
+          </div>
+          <div class="post-location">Rio de Janeiro-RJ · 10 dias</div><!-- ✅ -->
+        </div>
+        <div class="post-menu">···</div>
+      </div>
+
+      <!--
+        ✅ IMAGEM DO POST 3
+        Sugestão: influências do escritor, relação com outros autores, impacto social
+      -->
+      <div class="post-image-placeholder">
+        <img src="3.jpg" alt="imagem do post 3">
+      </div>
+
+      <div class="post-actions">
+        <button class="post-action-btn" onclick="toggleLike(this)" title="Curtir">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <button class="post-action-btn" title="Comentar">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        <button class="post-action-btn" title="Compartilhar" onclick="sharePost(this)">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+        <button class="post-action-btn post-save-btn" title="Salvar" onclick="toggleSave(this)">
+          <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+
+      <div class="post-likes">🤍 Seja o primeiro a curtir</div>
+
+      <div class="post-caption">
+        <strong>@usuario_do_escritor</strong>
+        <!-- ✅ LEGENDA DO POST 3: Legado, influências, impacto na sociedade brasileira -->
+        O legado de Machado de Assis continua vivo! Suas obras influenciam leitores, escritores e estudantes até hoje, mostrando que temas como ciúme, ambição e aparência social ainda fazem parte da sociedade atual.
+      </div>
+
+      <div class="post-tags">
+        <!-- ✅ EDITE AS HASHTAGS -->
+        <span class="tag">#DomCasmurro</span>
+        <span class="tag">#Cultura</span>
+        <span class="tag">#MachadoDeAssis</span>
+        <span class="tag">#Realismo</span>
+      </div>
+
+      <div class="post-comments-preview">Ver todos os comentários</div>
+
+      <div class="post-comment">
+        <strong>@turma_literatura</strong>
+        Que trabalho incrível! Parabéns! 🎉
+      </div>
+
+      <div class="post-date">Há 1 semana</div>
+    </div>
+    <!-- fim post 3 -->
+
+    <!--
+    ┌─────────────────────────────────────────────────────────┐
+    │  ✅ ADICIONAR MAIS POSTS?                               │
+    │  Copie um bloco "post-card" acima e cole aqui,         │
+    │  depois edite o conteúdo. Não esqueça de atualizar     │
+    │  o número em "stat-posts" no perfil!                   │
+    └─────────────────────────────────────────────────────────┘
+    -->
+
+  </div>
+  <!-- fim posts-feed -->
+
+  <!-- RODAPÉ -->
+  <div class="feed-footer">
+    <strong>Literatura Brasileira</strong> — Feed Interativo<br>
+    <!--
+      ✅ Edite: coloque o nome da turma e da escola
+      Exemplo: Turma 3°A · Escola Estadual João XXIII · 2025
+    -->
+    Projeto criado pela turma · Escola e Ano<br>
+    <span style="opacity: 0.4; font-size: 10px;">✏️ Edite este arquivo HTML para personalizar</span>
+  </div>
+
+</div><!-- fim insta-wrapper -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAIS DE DESTAQUE — ✅ EDITE O CONTEÚDO DENTRO DAS TAGS
+     Não altere a estrutura dos divs, apenas o texto interno
+     ══════════════════════════════════════════════════════════ -->
+
+<!-- MODAL: OBRAS -->
+<div class="modal-overlay" id="modal-obras" onclick="closeModalOnOverlay(event, this)">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-icon">🖊️</div>
+      <div>
+        <div class="modal-title">Principais Obras</div>
+        <!--
+          ✅ Subtítulo do modal — exemplo: "A bibliografia de Machado de Assis"
+        -->
+        <div class="modal-subtitle">A bibliografia do escritor</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('obras')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!--
+        ✅ PREENCHA ESTE MODAL COM AS OBRAS DO ESCRITOR
+        Copie e cole mais blocos "modal-obra-card" conforme necessário.
+
+        ESTRUTURA DE CADA OBRA:
+        <div class="modal-obra-card">
+          <div class="modal-obra-emoji">📘</div> (escolha um emoji adequado)
+          <div class="modal-obra-info">
+            <div class="modal-obra-title">Título da Obra (Ano)</div>
+            <div class="modal-obra-desc">Breve descrição da obra: gênero, tema, importância.</div>
+          </div>
+        </div>
+      -->
+
+      <div class="modal-section">
+        <div class="modal-section-title">Romances</div>
+
+        <div class="modal-obra-card">
+          <div class="modal-obra-emoji">📘</div>
+          <div class="modal-obra-info">
+            <div class="modal-obra-title">Dom Casmurro</div>
+            <div class="modal-obra-desc">Um romance que explora temas como o ciúmes e a traição,narrado pelo protagonista,Santiago, conhecido como Dom Casmurro.</div>
+          </div>
+        </div>
+
+        <div class="modal-obra-card">
+          <div class="modal-obra-emoji">📗</div>
+          <div class="modal-obra-info">
+            <div class="modal-obra-title">Memórias Póstumas de Brás Cubas</div>
+            <div class="modal-obra-desc">A obra-prima do autor,que narra a história de Brás Cubas, um personagen rico que, após sua morte, decide contar sua vida de maneira póstuma.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Poesia / Contos</div>
+
+        <div class="modal-obra-card">
+          <div class="modal-obra-emoji">📜</div>
+          <div class="modal-obra-info">
+            <div class="modal-obra-title">A mão e a Luva</div>
+            <div class="modal-obra-desc">Um romance que aborda os relacionamentos burguesses e a personagem Guiomar, considerada  a heroína da história.</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: VIDA -->
+<div class="modal-overlay" id="modal-vida" onclick="closeModalOnOverlay(event, this)">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-icon">🏛️</div>
+      <div>
+        <div class="modal-title">Biografia</div>
+        <!--
+          ✅ Subtítulo — exemplo: "A trajetória de vida de Machado de Assis"
+        -->
+        <div class="modal-subtitle">A trajetória de vida do escritor</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('vida')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!--
+        ✅ PREENCHA COM A BIOGRAFIA DO ESCRITOR
+        Use a linha do tempo (timeline) para fatos importantes da vida dele.
+        Copie mais blocos "modal-timeline-item" conforme necessário.
+      -->
+
+      <div class="modal-section">
+        <div class="modal-section-title">Linha do Tempo</div>
+
+        <div class="modal-timeline-item">
+          <div class="modal-timeline-year">1839</div><!-- ✅ Ano de nascimento -->
+          <div class="modal-timeline-text">Ano de nascimento de Machado de Assis, no Rio de Janeiro..</div>
+        </div>
+
+        <div class="modal-timeline-item">
+          <div class="modal-timeline-year">1869</div><!-- ✅ Ano importante -->
+          <div class="modal-timeline-text">Casou-se com Carolina Augusta Xavier de Novais, companheira importante em sua vida pessoal e intelectual.</div>
+        </div>
+
+        <div class="modal-timeline-item">
+          <div class="modal-timeline-year">1881</div><!-- ✅ -->
+          <div class="modal-timeline-text">Publicação de Memórias Póstumas de Brás Cubas, obra que marcou o início do Realismo no Brasil.</div>
+        </div>
+
+        <div class="modal-timeline-item">
+          <div class="modal-timeline-year">1897</div><!-- ✅ -->
+          <div class="modal-timeline-text">Fundação da Academia Brasileira de Letras, da qual Machado foi o primeiro presidente.</div>
+        </div>
+
+        <div class="modal-timeline-item">
+          <div class="modal-timeline-year">1899</div><!-- ✅ Ano de falecimento -->
+          <div class="modal-timeline-text">Publicação de Dom Casmurro, uma de suas obras mais famosas e estudadas.</div>
+        </div>
+
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Curiosidades</div>
+        <p>Mesmo sendo um dos maiores escritores do Brasil, Machado de Assis teve origem humilde e estudou grande parte do tempo sozinho, tornando-se autodidata.</p>
+        <p>Ele foi o primeiro presidente da Academia Brasileira de Letras e ocupou a cadeira nº 23 da instituição.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: FRASES -->
+<div class="modal-overlay" id="modal-frases" onclick="closeModalOnOverlay(event, this)">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-icon">💬</div>
+      <div>
+        <div class="modal-title">Frases Marcantes</div>
+        <div class="modal-subtitle">As melhores citações do escritor</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('frases')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!--
+        ✅ PREENCHA COM AS FRASES/CITAÇÕES DO ESCRITOR
+        Use o bloco "modal-quote" para cada citação.
+        Adicione após cada citação de qual obra ela veio.
+      -->
+
+      <div class="modal-section">
+        <div class="modal-section-title">Citações das Obras</div>
+
+        <div class="modal-quote">
+           “Ao vencedor, as batatas.”
+        </div>
+        <p style="font-size:11px; color: var(--text-muted); margin-top: -6px; margin-bottom: 14px;">—Quincas Borba, 1891</p>
+
+        <div class="modal-quote">
+           "Não tive filhos, não transmiti a nenhuma criatura o legado da nossa miséria.” 
+        </div>
+        <p style="font-size:11px; color: var(--text-muted); margin-top: -6px; margin-bottom: 14px;">— Memórias Póstumas de Brás Cubas, 1881</p>
+
+        <div class="modal-quote">
+         “Cada qual sabe amar a seu modo; o modo pouco importa; o essencial é que saiba amar.”
+        </div>
+        <p style="font-size:11px; color: var(--text-muted); margin-top: -6px; margin-bottom: 14px;">— Ressurreição, 1872</p>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CONTEXTO HISTÓRICO -->
+<div class="modal-overlay" id="modal-contexto" onclick="closeModalOnOverlay(event, this)">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-icon">📜</div>
+      <div>
+        <div class="modal-title">Contexto Histórico</div>
+        <div class="modal-subtitle">Brasil e mundo na época do escritor</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('contexto')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!--
+        ✅ PREENCHA COM O CONTEXTO HISTÓRICO DO PERÍODO
+        Fale sobre: o que acontecia no Brasil e no mundo enquanto o escritor vivia?
+        Que movimentos sociais, políticos e culturais influenciaram sua obra?
+      -->
+
+      <div class="modal-section">
+        <div class="modal-section-title">O Brasil na época</div>
+        <p>Machado de Assis viveu no Brasil Império e no início da República. Nesse período ocorreram mudanças importantes, como a abolição da escravidão e a Proclamação da República.</p>
+        <p> Essas transformações influenciaram suas obras, que mostram críticas à sociedade, à elite e aos costumes da época.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">O Movimento Literário</div>
+        <p>Machado de Assis pertenceu ao Realismo, movimento literário marcado pela crítica social, ironia e análise psicológica dos personagens.</p>
+        <p>Essas características aparecem em obras como Dom Casmurro e Memórias Póstumas de Brás Cubas.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Outros Autores do Período</div>
+        <p>Alguns escritores contemporâneos foram:Aluísio Azevedo,Olavo Bilac,José de Alencar.Todos fizeram parte de importantes movimentos literários brasileiros da época.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: LEGADO -->
+<div class="modal-overlay" id="modal-legado" onclick="closeModalOnOverlay(event, this)">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-icon">🏆</div>
+      <div>
+        <div class="modal-title">Prêmios e Legado</div>
+        <div class="modal-subtitle">Machado de Assis foi fundador e primeiro presidente da Academia Brasileira de Letras. Até hoje é considerado um dos maiores escritores do Brasil. Suas obras, como Dom Casmurro, continuam sendo estudadas pela importância para a literatura brasileira e pelo Realismo.</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('legado')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!--
+        ✅ PREENCHA COM PRÊMIOS, RECONHECIMENTOS E LEGADO DO ESCRITOR
+      -->
+
+      <div class="modal-section">
+        <div class="modal-section-title">Reconhecimentos em Vida</div>
+        <p>Machado de Assis recebeu grande reconhecimento ainda em vida. Foi fundador e primeiro presidente da Academia Brasileira de Letras, além de ocupar importantes cargos públicos no governo. Também era muito respeitado pelos escritores e intelectuais da época, tornando-se uma das maiores referências da literatura brasileira.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Influência na Literatura Brasileira</div>
+        <p>Machado de Assis influenciou muitos escritores brasileiros, como Carlos Drummond de Andrade, Graciliano Ramos e Clarice Lispector.</p>
+        <p>Sua obra ajudou a transformar a literatura brasileira ao aprofundar a análise psicológica dos personagens e fazer críticas à sociedade. Machado popularizou técnicas como: Ironia,Narrador que conversa com o leitor,Reflexão psicológica,Crítica social,Dúvida e ambiguidade na narrativa.Essas características marcaram o Realismo brasileiro e influenciaram escritores das gerações seguintes.</p>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Presente nos Dias de Hoje</div>
+        <p>As obras de Machado de Assis continuam muito presentes atualmente. Seus livros são estudados em escolas, universidades e aparecem com frequência em vestibulares e no ENEM.Obras como Dom Casmurro e Memórias Póstumas de Brás Cubas são consideradas clássicos da literatura brasileira.Além disso, várias obras foram adaptadas para:Filmes,Séries de TV,Teatro,Quadrinhos.Essas adaptações ajudam a manter o legado de Machado de Assis vivo até hoje.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--
+  ✅ Para adicionar um NOVO MODAL DE DESTAQUE:
+  1. Copie um bloco modal-overlay acima
+  2. Mude o id="modal-NOMEDESTAQUE"
+  3. Mude os botões onclick para closeModal('NOMEDESTAQUE')
+  4. Preencha o conteúdo
+  5. No HTML do destaque, mude onclick para openHighlight('NOMEDESTAQUE')
+-->
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL DE STORIES (TELA CHEIA) — NÃO EDITE ESTA ESTRUTURA
+     ══════════════════════════════════════════════════════════ -->
+<div class="story-modal-overlay" id="story-modal" onclick="handleStoryTap(event)">
+  <div class="story-modal-inner">
+
+    <!-- barra de progresso -->
+    <div class="story-progress-bar" id="story-progress-bar"></div>
+
+    <!-- cabeçalho do story -->
+    <div class="story-modal-header">
+      <div class="story-modal-avatar" id="story-modal-avatar">📖</div>
+      <div class="story-modal-name" id="story-modal-name">Nome do escritor</div>
+      <button class="story-modal-close" onclick="closeStoryModal(event)">✕</button>
+    </div>
+
+    <!-- conteúdo da mídia -->
+    <div class="story-media-container" id="story-media-container"></div>
+
+    <!-- legenda -->
+    <div class="story-modal-caption" id="story-modal-caption"></div>
+
+    <!-- áreas de toque (não clicáveis visualmente) -->
+    <div class="story-nav-tap prev" id="story-tap-prev"></div>
+    <div class="story-nav-tap next" id="story-tap-next"></div>
+
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
